@@ -3,8 +3,14 @@ package mark
 import (
 	"context"
 
+	"github.com/slok/k8s-webhook-example/internal/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
+
+// kubewebhookLogger is a small proxy to use our logger with Kubewebhook.
+type kubewebhookLogger struct {
+	log.Logger
+}
 
 // Marker knows how to mark Kubernetes resources.
 type Marker interface {
@@ -31,6 +37,16 @@ func (l labelmarker) Mark(_ context.Context, obj metav1.Object) error {
 	}
 
 	obj.SetLabels(labels)
+	pod := v1.Pod{}
+	managedFields := obj
+
+	for index, element := range managedFields {
+
+		log.Infof("index %d", index)
+		log.Infof("element %s", element)
+
+	}
+
 	return nil
 }
 

@@ -33,6 +33,24 @@ And finally there is an example of how we could deploy our webhooks on a product
 
 - [Deploy](deploy)
 
+#### install mkcert
+
+```
+ make gen-deploy-certs 
+ make build
+ make publish-image 
+kubectl create namespace k8s-webhook-example
+kubectl apply -f deploy/app-certs.yaml
+kubectl apply -f deploy/app.yaml
+kubectl apply -f deploy/webhooks.yaml
+kubectl run nginx --image=nginx -n
+# observe the labels in describe:
+kubectl describe pod nginx
+```
+
+####  
+
+
 ## Webhooks
 
 ### `all-mark-webhook.slok.dev`
